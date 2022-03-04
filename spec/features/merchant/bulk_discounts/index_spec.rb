@@ -14,8 +14,15 @@ RSpec.describe 'The Bulk Discounts Index' do
 
   it "Is linked to from the merchant dashboard" do
     visit merchant_dashboard_index_path(@katz)
-    click_on "View all discounts"
+    click_on "#{@katz.name}'s discounts"
     expect(current_path).to eq(merchant_bulk_discounts_path(@katz))
+  end
+
+  it "Has a title with the merchants name" do
+    visit merchant_bulk_discounts_path(@katz)
+
+    expect(page).to have_content("#{@katz.name}'s Bulk Discounts")
+    expect(page).to_not have_content("#{@not_there.name}'s Bulk Discounts")
   end
 
   it "displays all discounts percentages, and thresholds" do
@@ -32,10 +39,10 @@ RSpec.describe 'The Bulk Discounts Index' do
   it "Each discount has a link to its show page" do
     visit merchant_bulk_discounts_path(@katz)
 
-    within 'discounts-0' do
+    within '#discounts-0' do
       expect(page).to have_link('View Discount')
     end
-    within 'discounts-1' do
+    within '#discounts-1' do
       expect(page).to have_link('View Discount')
     end
   end
