@@ -9,3 +9,8 @@
   </p>
   </div>
 <% end %>
+
+<% @holidays.each do |holiday| %>
+  <%= holiday.name %></br>
+  <%= holiday.date %></br>
+<% end %>
