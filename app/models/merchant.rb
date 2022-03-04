@@ -12,7 +12,6 @@ class Merchant < ApplicationRecord
   scope :with_successful_transactions, -> { joins(:transactions)
           .where("transactions.result =?", 0)}
 
-
   def merchant_invoices
     (invoices.order(:id)).uniq
   end
