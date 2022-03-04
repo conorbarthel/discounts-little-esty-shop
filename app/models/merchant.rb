@@ -2,6 +2,7 @@ class Merchant < ApplicationRecord
   enum status: {enabled: 0, disabled: 1}
   validates :name, presence: true
 
+  has_many :bulk_discounts
   has_many :items
   has_many :invoice_items, through: :items
   has_many :invoices, through: :invoice_items
@@ -10,7 +11,6 @@ class Merchant < ApplicationRecord
 
   scope :with_successful_transactions, -> { joins(:transactions)
           .where("transactions.result =?", 0)}
-
 
   def merchant_invoices
     (invoices.order(:id)).uniq

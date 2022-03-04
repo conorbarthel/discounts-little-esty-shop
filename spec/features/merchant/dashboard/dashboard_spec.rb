@@ -49,7 +49,6 @@ RSpec.describe 'The Merchant Dashboard' do
   it "in not shipped the item ids are links to merchant_invoices" do
     visit merchant_dashboard_index_path(@katz)
     within '#not_shipped-0' do
-
       click_on "#{@invoice1.id}"
       expect(current_path).to eq("/merchants/#{@katz.id}/invoices")
     end
