@@ -42,8 +42,18 @@ RSpec.describe 'The Bulk Discounts New Page' do
     fill_in 'Percentage discount', with: -50
     fill_in 'Quantity threshold', with: 40
     click_on 'Create Bulk discount'
-    
+
     expect(current_path).to eq(new_merchant_bulk_discount_path(@katz))
     expect(page).to have_content("All fields must be filled in with valid data")
+  end
+
+  it "the new discount apears on the bulk discount index page
+  after valid data is submitted" do
+    visit new_merchant_bulk_discount_path(@katz)
+    fill_in 'Percentage discount', with: 35
+    fill_in 'Quantity threshold', with: 40
+    click_on 'Create Bulk discount'
+
+    expect(page).to have_content("Buy 40 or more of an item and get 35% off")
   end
 end
