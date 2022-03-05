@@ -49,7 +49,7 @@ RSpec.describe 'The Bulk Discounts Index' do
 
   it "has a section with next 3 upcomming US holidays names and dates" do
     visit merchant_bulk_discounts_path(@katz)
-    #save_and_open_page
+
     expect(page).to have_content("Good Friday")
     expect(page).to have_content("2022-04-15")
     expect(page).to have_content("Memorial Day")
@@ -58,5 +58,12 @@ RSpec.describe 'The Bulk Discounts Index' do
     expect(page).to have_content("2022-06-20")
     expect(page).to_not have_content("Independence Day")
     expect(page).to_not have_content("2022-07-04")
+  end
+
+  it "has a link to create a new discount" do
+    visit merchant_bulk_discounts_path(@katz)
+    click_on "Create New Discount"
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@katz))
   end
 end
