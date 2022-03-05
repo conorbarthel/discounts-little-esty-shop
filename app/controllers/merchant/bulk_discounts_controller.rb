@@ -6,5 +6,6 @@ class Merchant::BulkDiscountsController < ApplicationController
     @holidays = welcome.holidays[0..2]
   end
 
-
+  def new
+  end
 end
