@@ -7,7 +7,7 @@ RSpec.describe 'The Bulk Discounts Show Page' do
     @discount1 = @katz.bulk_discounts.create!(percentage_discount:20,
                                               quantity_threshold:15)
     @discount2 = @katz.bulk_discounts.create!(percentage_discount:10,
-                                              quantity_threshold:5)
+                                              quantity_threshold:3)
 
     visit merchant_bulk_discount_path(@katz, @discount1)
 
