@@ -6,6 +6,8 @@
   Buy <%= discount.quantity_threshold %> or more of an item
   and get <%= discount.percentage_discount %>% off
   <%= link_to "View Discount", merchant_bulk_discount_path(@merchant.id, discount.id) %>
+  <%= link_to "Delete Discount", merchant_bulk_discount_path(@merchant.id, discount.id),
+  method: :delete %>
   </p>
   </div>
 <% end %>

@@ -5,7 +5,7 @@ RSpec.describe 'The Bulk Discounts Index' do
     @katz = Merchant.create!(name: 'Katz Kreations')
     @not_there = Merchant.create!(name: 'Not There')
     @discount1 = @katz.bulk_discounts.create!(percentage_discount:20,
-                                              quantity_threshold:10)
+                                              quantity_threshold:15)
     @discount2 = @katz.bulk_discounts.create!(percentage_discount:10,
                                               quantity_threshold:5)
     @discount3 = @not_there.bulk_discounts.create!(percentage_discount:50,
@@ -66,4 +66,30 @@ RSpec.describe 'The Bulk Discounts Index' do
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(@katz))
   end
+
+  it "next to each discount there is a link to delete that discount" do
+    visit merchant_bulk_discounts_path(@katz)
+
+    within '#discounts-0' do
+      expect(page).to have_link('Delete Discount')
+    end
+    within '#discounts-1' do
+      expect(page).to have_link('Delete Discount')
+    end
+  end
+
+  it "When the link is clicked user is redirected to discount index page
+  and that discount is no longer persent" do
+    visit merchant_bulk_discounts_path(@katz)
+    within '#discounts-0' do
+      click_on 'Delete Discount'
+    end
+    expect(current_path).to eq(merchant_bulk_discounts_path(@katz))
+
+    within '#discounts-0' do
+      expect(page).to_not have_content(@discount1.percentage_discount)
+      expect(page).to_not have_content(@discount1.quantity_threshold)
+    end
+  end
+
 end
