@@ -7,5 +7,6 @@ class Merchant::BulkDiscountsController < ApplicationController
   end
 
   def new
+    @bulk_discount = BulkDiscount.new
   end
 end
