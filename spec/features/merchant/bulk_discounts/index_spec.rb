@@ -5,7 +5,7 @@ RSpec.describe 'The Bulk Discounts Index' do
     @katz = Merchant.create!(name: 'Katz Kreations')
     @not_there = Merchant.create!(name: 'Not There')
     @discount1 = @katz.bulk_discounts.create!(percentage_discount:20,
-                                              quantity_threshold:10)
+                                              quantity_threshold:15)
     @discount2 = @katz.bulk_discounts.create!(percentage_discount:10,
                                               quantity_threshold:5)
     @discount3 = @not_there.bulk_discounts.create!(percentage_discount:50,
@@ -85,6 +85,7 @@ RSpec.describe 'The Bulk Discounts Index' do
       click_on 'Delete Discount'
     end
     expect(current_path).to eq(merchant_bulk_discounts_path(@katz))
+
     within '#discounts-0' do
       expect(page).to_not have_content(@discount1.percentage_discount)
       expect(page).to_not have_content(@discount1.quantity_threshold)
