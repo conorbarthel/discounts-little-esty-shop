@@ -15,8 +15,8 @@ class Merchant::BulkDiscountsController < ApplicationController
     merchant = Merchant.find(params[:merchant_id])
     bulk_discount = merchant.bulk_discounts.create(bulk_discount_params)
     if bulk_discount.id == nil
-      flash[:alert] = "All fields must be filled in with valid data"
       redirect_to new_merchant_bulk_discount_path(merchant)
+      flash[:alert] = "All fields must be filled in with valid data"
     else
       redirect_to merchant_bulk_discounts_path(merchant)
     end
