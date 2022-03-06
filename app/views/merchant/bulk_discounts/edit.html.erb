@@ -1,0 +1,10 @@
+<%= form_for [:merchant, @bulk_discount], local: true do |f| %>
+  <p><%= f.label :percentage_discount %></p>
+  <p><%= f.number_field :percentage_discount,
+    {min: 1, max: 99, :value => @bulk_discount.percentage_discount} %></p> <br>
+  <p><%= f.label :quantity_threshold %></p>
+  <p><%= f.number_field :quantity_threshold, {min: 1,
+    :value => @bulk_discount.quantity_threshold} %></p> <br>
+
+  <%= f.submit %>
+<%end%>
