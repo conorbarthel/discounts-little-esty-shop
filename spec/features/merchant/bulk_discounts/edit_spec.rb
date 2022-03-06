@@ -18,7 +18,7 @@ RSpec.describe 'The Bulk Discounts Edit Page' do
   it "has a form to edit the discount that redirects to the show page on submission" do
     visit edit_merchant_bulk_discount_path(@katz, @discount1)
     fill_in 'Percentage discount', with: 45
-    fill_in 'Quantity Threshold', with: 50
+    fill_in 'Quantity threshold', with: 50
     click_on 'Update Bulk discount'
     expect(current_path).to eq(merchant_bulk_discount_path(@katz, @discount1))
   end
@@ -34,7 +34,7 @@ RSpec.describe 'The Bulk Discounts Edit Page' do
     expect(@discount1.percentage_discount).to eq(20)
     expect(@discount1.quantity_threshold).to eq(15)
     fill_in 'Percentage discount', with: 45
-    fill_in 'Quantity Threshold', with: 50
+    fill_in 'Quantity threshold', with: 50
     click_on 'Update Bulk discount'
     expect(@discount1.percentage_discount).to eq(45)
     expect(@discount1.quantity_threshold).to eq(50)
@@ -46,10 +46,10 @@ RSpec.describe 'The Bulk Discounts Edit Page' do
   redirects backs to the edit page" do
     visit edit_merchant_bulk_discount_path(@katz, @discount1)
     fill_in 'Percentage discount', with: -45
-    fill_in 'Quantity Threshold', with: 50
+    fill_in 'Quantity threshold', with: 50
     click_on 'Update Bulk discount'
     expect(current_path).to eq(edit_merchant_bulk_discount_path(@katz, @discount1))
     expect(page).to have_content("All values must be valid")
   end
-  
+
 end

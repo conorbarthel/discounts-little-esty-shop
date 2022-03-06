@@ -2,3 +2,5 @@
 
 <%= @discount.percentage_discount %></br>
 <%= @discount.quantity_threshold %>
+<%= link_to "Update Discount",
+edit_merchant_bulk_discount_path(@discount.merchant_id, @discount) %>
