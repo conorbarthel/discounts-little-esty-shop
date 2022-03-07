@@ -28,22 +28,6 @@ RSpec.describe Item, type: :model do
       expect(item_1.display_price).to eq("24.75")
     end
   end
-
-  describe 'instance methods' do
-    describe '.best_discount' do
-      it 'returns the possible discount for the item' do
-        merchant1 = Merchant.create!(name: "Ana Maria")
-        item1 = merchant1.items.create!(name: "cheese", description: "european cheese", unit_price: 2475)
-        customer1 = Customer.create!(first_name: 'Fred', last_name: 'Dunce')
-        invoice1 =Invoice.create!(status: 2, customer_id: customer1.id)
-        invoice_item1 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice1.id, quantity: 50, unit_price: 100, status: 1)
-        discount1 = merchant1.bulk_discounts.create!(percentage_discount: 5, quantity_threshold: 5)
-        discount2 = merchant1.bulk_discounts.create!(percentage_discount: 50, quantity_threshold: 50)
-
-        expect(item1.best_discount).to eq(discount2)
-      end
-    end
-  end
 end
 
 RSpec.describe Item, type: :model do

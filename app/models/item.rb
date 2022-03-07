@@ -28,9 +28,4 @@ class Item < ApplicationRecord
       .date
       .strftime("%m/%d/%y")
   end
-
-  def best_discount
-    bulk_discounts.order(percentage_discount: :desc)
-    .first
-  end
 end

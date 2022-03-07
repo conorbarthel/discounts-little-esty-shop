@@ -76,23 +76,11 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
-    describe '.find_totals_for_items' do
-      it "finds the totals for each item" do
-        invoice4 = Invoice.create!(status: 0, customer_id: @customer1.id)
-        invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: invoice4.id, quantity: 10, unit_price: 10, status: 1)
-        invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: invoice4.id, quantity: 5, unit_price: 10, status: 1)
-        invoice_item4 = InvoiceItem.create!(item_id: @item2.id, invoice_id: invoice4.id, quantity: 3, unit_price: 15, status: 1)
-        discount1 = @merchant.bulk_discounts.create!(percentage_discount:20,
-                                                      quantity_threshold:10)
-        expect(invoice4.find_totals_for_items)
-      end
-    end
-
     describe '.discouted_revenue' do
       it "calculates total revenue after discount" do
         invoice4 = Invoice.create!(status: 0, customer_id: @customer1.id)
         invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: invoice4.id, quantity: 10, unit_price: 10, status: 1)
-        invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: invoice4.id, quantity: 5, unit_price: 10, status: 1)
+        invoice_item4 = InvoiceItem.create!(item_id: @item2.id, invoice_id: invoice4.id, quantity: 5, unit_price: 3, status: 1)
         discount1 = @merchant.bulk_discounts.create!(percentage_discount:20,
                                                       quantity_threshold:10)
 
