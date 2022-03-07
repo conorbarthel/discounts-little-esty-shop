@@ -30,6 +30,7 @@ class Item < ApplicationRecord
   end
 
   def best_discount
-    binding.pry
+    bulk_discounts.order(percentage_discount: :desc)
+    .first
   end
 end

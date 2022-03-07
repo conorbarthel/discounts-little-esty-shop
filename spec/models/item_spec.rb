@@ -40,7 +40,7 @@ RSpec.describe Item, type: :model do
         discount1 = merchant1.bulk_discounts.create!(percentage_discount: 5, quantity_threshold: 5)
         discount2 = merchant1.bulk_discounts.create!(percentage_discount: 50, quantity_threshold: 50)
 
-        expect(item1.best_discount).to eq(@discount2)
+        expect(item1.best_discount).to eq(discount2)
       end
     end
   end
