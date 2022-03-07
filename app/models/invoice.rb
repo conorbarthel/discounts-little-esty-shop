@@ -18,6 +18,13 @@ class Invoice < ApplicationRecord
     (invoice_items.sum("invoice_items.unit_price * invoice_items.quantity"))/100
   end
 
+  def discouted_revenue
+    binding.pry
+    invoice_items.joins(merchants: :bulk_discounts)
+                .where('quantity >= quantity_threshold')
+                .order(percentage_discount: :desc)
+  end
+
   def revenue_display_price
     cents = (invoice_items.sum("invoice_items.unit_price * invoice_items.quantity"))
     '%.2f' % (cents / 100.0)
