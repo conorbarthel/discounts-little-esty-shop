@@ -16,7 +16,7 @@ RSpec.describe 'The Merchant Invoice Show Page' do
   end
 
   it 'displays all information related to that invoice' do
-    visit merchant_invoice_path(@merchant.id, @invoice1.id)
+    visit merchant_invoice_path(@merchant, @invoice1)
     expect(page).to have_content("Merchant Invoices Show Page")
     expect(page).to have_content(@invoice1.id)
     expect(page).to have_content(@invoice1.status)
@@ -26,7 +26,7 @@ RSpec.describe 'The Merchant Invoice Show Page' do
   end
 
   it 'displays the total revenue that will be generated from all items on the invoice' do
-    visit merchant_invoice_path(@merchant.id, @invoice1.id)
+    visit merchant_invoice_path(@merchant, @invoice1)
     expect(page).to have_content(@invoice1.invoice_revenue)
     within(".total_revenue") do
       expect(page).to have_no_content(@invoice2.invoice_revenue)
@@ -34,14 +34,27 @@ RSpec.describe 'The Merchant Invoice Show Page' do
   end
 
   it "displays the discounted revenue below total revenue" do
-    visit merchant_invoice_path(@merchant.id, @invoice1.id)
+    visit merchant_invoice_path(@merchant, @invoice1)
     within('.total_revenue') do
       expect(page).to have_content(@invoice1.discounted_revenue)
     end
   end
 
+  it "next to each invoice item there is a link to the
+  bulk discount that was used on that item" do
+    item3 = Item.create!(name: 'literal goop', description: 'delicious', unit_price: '4000', merchant_id: @merchant.id)
+    invoice_item4 = InvoiceItem.create!(item_id: item3.id, invoice_id: @invoice1.id, quantity: 10, unit_price: 500, status: 1)
+    discount = @merchant.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 5)
+    visit merchant_invoice_path(@merchant, @invoice1)
+
+    within("div#id-#{invoice_item4.id}") do
+      click_on "View Discount"
+    end
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant, discount))
+  end
+
   it 'displays status as a select field that can update the items status' do
-    visit merchant_invoice_path(@merchant.id, @invoice1.id)
+    visit merchant_invoice_path(@merchant, @invoice1)
     expect(page).to have_content(@invoice_item1.status)
     expect(@invoice_item1.status).to eq("packaged")
     within("div#id-#{@invoice_item1.id}") do
