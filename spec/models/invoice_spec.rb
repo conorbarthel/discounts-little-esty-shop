@@ -63,18 +63,30 @@ RSpec.describe Invoice, type: :model do
        end
     end
 
-    describe 'revenue display price' do
+    describe '.revenue display price' do
       it 'returns the total revenue as a display unit' do
         expect(@invoice1.revenue_display_price).to eq('6.00')
         expect(@invoice2.revenue_display_price).to eq('8.00')
-       end
+      end
     end
 
-    describe 'display date' do
+    describe '.display date' do
       it 'returns a date formated long' do
         expect(@invoice1.display_date).to eq(Date.today.strftime("%A, %B %d, %Y"))
-       end
-     end
+      end
+    end
+
+    describe '.discounted_revenue' do
+      it "calculates total revenue after discount" do
+        invoice4 = Invoice.create!(status: 0, customer_id: @customer1.id)
+        invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: invoice4.id, quantity: 10, unit_price: 10, status: 1)
+        invoice_item4 = InvoiceItem.create!(item_id: @item3.id, invoice_id: invoice4.id, quantity: 1, unit_price: 100, status: 1)
+        discount1 = @merchant.bulk_discounts.create!(percentage_discount:20,
+                                                      quantity_threshold:10)
+
+        expect(invoice4.discounted_revenue).to eq(180)
+      end
+    end
   end
 end
 

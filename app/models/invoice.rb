@@ -18,6 +18,14 @@ class Invoice < ApplicationRecord
     (invoice_items.sum("invoice_items.unit_price * invoice_items.quantity"))/100
   end
 
+  def discounted_revenue
+    discounted_revenue = 0
+    invoice_items.each do |line_item|
+      discounted_revenue += line_item.item_revenue
+    end
+    discounted_revenue
+  end
+
   def revenue_display_price
     cents = (invoice_items.sum("invoice_items.unit_price * invoice_items.quantity"))
     '%.2f' % (cents / 100.0)
