@@ -24,7 +24,7 @@ class InvoiceItem < ApplicationRecord
 
   def item_revenue
     if best_discount != nil
-      (quantity * unit_price) * (best_discount / 100.0)
+      (quantity * unit_price) - ((quantity * unit_price) * (best_discount / 100.0))
     else
       quantity * unit_price
     end

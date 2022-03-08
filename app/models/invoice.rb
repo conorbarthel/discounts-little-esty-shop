@@ -19,10 +19,11 @@ class Invoice < ApplicationRecord
   end
 
   def discouted_revenue
-    binding.pry
-    invoice_items.joins(merchants: :bulk_discounts)
-                .where('quantity >= quantity_threshold')
-                .order(percentage_discount: :desc)
+    discouted_revenue = 0
+    invoice_items.each do |line_item|
+      discouted_revenue += line_item.item_revenue
+    end
+    discouted_revenue
   end
 
   def revenue_display_price

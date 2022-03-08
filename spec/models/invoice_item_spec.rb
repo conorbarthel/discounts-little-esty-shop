@@ -68,9 +68,9 @@ RSpec.describe InvoiceItem, type: :model do
         invoice1 =Invoice.create!(status: 2, customer_id: customer1.id)
         invoice_item1 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice1.id, quantity: 5, unit_price: 100, status: 1)
         invoice_item2 = InvoiceItem.create!(item_id: item2.id, invoice_id: invoice1.id, quantity: 5, unit_price: 100, status: 1)
-        discount2 = merchant1.bulk_discounts.create!(percentage_discount: 50, quantity_threshold: 5)
+        discount2 = merchant1.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 5)
 
-        expect(invoice_item1.item_revenue).to eq(250)
+        expect(invoice_item1.item_revenue).to eq(400)
         expect(invoice_item2.item_revenue).to eq(500)
       end
     end
