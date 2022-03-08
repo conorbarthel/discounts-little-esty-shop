@@ -1,3 +1,5 @@
-<h1> <% @merchants.each do |merchant| %> </h1>
-<%= link_to "#{merchant.name}'s index page", "/merchants/#{merchant.id}/items" %>
+<h1> <% @merchants.each do |merchant| %>
+  <%= link_to "#{merchant.name}'s Dashboard",
+  merchant_dashboard_index_path(merchant) %>
 <% end %>
+</h1>
