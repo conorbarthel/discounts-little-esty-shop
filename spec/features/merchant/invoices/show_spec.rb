@@ -40,6 +40,18 @@ RSpec.describe 'The Merchant Invoice Show Page' do
     end
   end
 
+  it "next to each invoice item there is a link to the
+  bulk discount that was used on that item" do
+    invoice_item3 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice1.id, quantity: 10, unit_price: 500, status: 1)
+    discount = merchant1.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 5)
+    visit merchant_invoice_path(@merchant.id, @invoice1.id)
+
+    within("div#id-#{invoice_item4.id}") do
+      click_on "View Discount"
+    end
+    expect(current_path).to eq(merchant_bulk_discount_path(discount))
+  end
+
   it 'displays status as a select field that can update the items status' do
     visit merchant_invoice_path(@merchant.id, @invoice1.id)
     expect(page).to have_content(@invoice_item1.status)
