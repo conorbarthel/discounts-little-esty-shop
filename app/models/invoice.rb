@@ -18,12 +18,12 @@ class Invoice < ApplicationRecord
     (invoice_items.sum("invoice_items.unit_price * invoice_items.quantity"))/100
   end
 
-  def discouted_revenue
-    discouted_revenue = 0
+  def discounted_revenue
+    discounted_revenue = 0
     invoice_items.each do |line_item|
-      discouted_revenue += line_item.item_revenue
+      discounted_revenue += line_item.item_revenue
     end
-    discouted_revenue
+    discounted_revenue
   end
 
   def revenue_display_price

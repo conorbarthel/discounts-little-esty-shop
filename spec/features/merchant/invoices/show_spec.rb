@@ -35,8 +35,8 @@ RSpec.describe 'The Merchant Invoice Show Page' do
 
   it "displays the discounted revenue below total revenue" do
     visit merchant_invoice_path(@merchant.id, @invoice1.id)
-    within('#discouted_revenue') do
-      expect(page).to have_content(@invoice1.discouted_revenue)
+    within('.total_revenue') do
+      expect(page).to have_content(@invoice1.discounted_revenue)
     end
   end
 

@@ -76,7 +76,7 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
-    describe '.discouted_revenue' do
+    describe '.discounted_revenue' do
       it "calculates total revenue after discount" do
         invoice4 = Invoice.create!(status: 0, customer_id: @customer1.id)
         invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: invoice4.id, quantity: 10, unit_price: 10, status: 1)
@@ -84,7 +84,7 @@ RSpec.describe Invoice, type: :model do
         discount1 = @merchant.bulk_discounts.create!(percentage_discount:20,
                                                       quantity_threshold:10)
 
-        expect(invoice4.discouted_revenue).to eq(180)
+        expect(invoice4.discounted_revenue).to eq(180)
       end
     end
   end
