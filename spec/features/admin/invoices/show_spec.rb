@@ -21,7 +21,7 @@ RSpec.describe 'The Admin Invoices Show' do
     @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 3, unit_price: 2400, status: 1)
     @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice2.id, quantity: 2, unit_price: 3450, status: 0)
     @invoice_item3 = InvoiceItem.create!(item_id: @item3.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 14500, status: 2)
-    @invoice_item4 = InvoiceItem.create!(item_id: @item4.id, invoice_id: @invoice2.id, quantity: 2, unit_price: 5405, status: 2)
+    @invoice_item4 = InvoiceItem.create!(item_id: @item4.id, invoice_id: @invoice2.id, quantity: 20, unit_price: 5405, status: 2)
     @invoice_item5 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice3.id, quantity: 2, unit_price: 5405, status: 2)
   end
 
@@ -62,8 +62,12 @@ RSpec.describe 'The Admin Invoices Show' do
       expect(page).not_to have_content(@item3.name)
     end
 
-    it "text" do
+    it "details include total discounted revenue" do
+      discount = @merchant1.bulk_discounts.create!(percentage_discount:20,
+                                                    quantity_threshold:10)
+      visit admin_invoice_path(@invoice2)
 
+      expect(page).to have_content(@invoice2.discounted_revenue)
     end
   end
 
